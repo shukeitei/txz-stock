@@ -115,6 +115,7 @@ var ALL = [], activeTags = new Set();
 function badge(mk, dy) {
   if (mk === '可现做') return '<span class="badge b-ok">可现做' + (dy ? ' · 约' + dy + '天发出' : '') + '</span>';
   if (mk === '超卖可议' || mk === '可协商') return '<span class="badge b-warn">超卖可议</span>';
+  if (mk === '停产') return '<span class="badge b-none">停产 · 售完即止</span>';
   if (mk === '不支持') return '<span class="badge b-none">不可现做</span>';
   return '';
 }

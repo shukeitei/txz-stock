@@ -20,7 +20,13 @@ if (!passcodes || !Object.keys(passcodes).length) {
 }
 
 // ---------- 数据整形 ----------
-const rows = raw.rows.filter(r => String(r['定制'] || '').includes('定制'));
+// 不上页面的款：工厂批发（定制仅指定制图标，10件起拿）857464619076/847658314500；
+// 工厂制版不补货 760939427964；不代发 727888970927
+const EXCLUDE_IDS = new Set(['857464619076', '847658314500', '760939427964', '727888970927']);
+// 内部信息 tag，不给代理看
+const HIDE_TAGS = new Set(['深圳', '工厂定制']);
+const rows = raw.rows.filter(r =>
+  String(r['定制'] || '').includes('定制') && !EXCLUDE_IDS.has(String(r['商品ID'] || '').trim()));
 const styles = new Map();
 for (const r of rows) {
   const full = String(r['SKU全称'] || '').trim();
@@ -33,10 +39,10 @@ for (const r of rows) {
     st = { n: name, tg: new Set(), os: false, mk: '', dy: '', sz: [] };
     styles.set(name, st);
   }
-  for (const t of String(r['产品类别'] || '').split(/[,，]/)) { const tt = t.trim(); if (tt) st.tg.add(tt); }
+  for (const t of String(r['产品类别'] || '').split(/[,，]/)) { const tt = t.trim(); if (tt && !HIDE_TAGS.has(tt)) st.tg.add(tt); }
   if (String(r['在售'] || '').includes('在售')) st.os = true;
   const mk = String(r['现做'] || '').trim(); if (mk && !st.mk) st.mk = mk;
-  const dy = String(r['现做发货时效'] || '').trim(); if (dy && !st.dy) st.dy = dy;
+  const dy = String(r['现做发货时效'] || '').trim(); if (/^\d+$/.test(dy) && !st.dy) st.dy = dy;
   st.sz.push([size, Number(r['实际库存']) || 0]);
 }
 

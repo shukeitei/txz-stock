@@ -1,0 +1,6 @@
+.env
+.passcodes.json
+data/
+site/
+node_modules/
+.DS_Store

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>它小灶 · 代发库存</title>
+<style>
+:root {
+  --bg: #f6f4f0; --card: #ffffff; --ink: #2d2a26; --muted: #8a8378;
+  --line: #e6e1d8; --accent: #b5541c;
+  --ok-bg: #e5efdf; --ok-ink: #3d6b2e;
+  --low-bg: #f7ecd4; --low-ink: #8a6414;
+  --out-bg: #f3e3de; --out-ink: #a04b3a;
+  --none-bg: #eceae5; --none-ink: #8a8378;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1b18; --card: #26231f; --ink: #e8e4dd; --muted: #97907f;
+    --line: #38342d; --accent: #e0824a;
+    --ok-bg: #2c3b26; --ok-ink: #9fc98a;
+    --low-bg: #3d3420; --low-ink: #d9b45e;
+    --out-bg: #402a25; --out-ink: #d98876;
+    --none-bg: #302d28; --none-ink: #97907f;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 16px 14px 60px; }
+header h1 { font-size: 20px; letter-spacing: .02em; }
+.meta { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+.notice { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 12.5px; color: var(--muted); margin: 12px 0; }
+.controls { position: sticky; top: 0; background: var(--bg); padding: 10px 0 8px; z-index: 5; }
+#q { width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); font-size: 15px; outline: none; }
+#q:focus { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip { border: 1px solid var(--line); background: var(--card); color: var(--muted); border-radius: 999px; padding: 3px 11px; font-size: 12.5px; cursor: pointer; user-select: none; }
+.chip.on { border-color: var(--accent); color: var(--accent); background: transparent; font-weight: 600; }
+.stats { color: var(--muted); font-size: 12.5px; margin: 6px 0 10px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+.card h2 { font-size: 15.5px; font-weight: 600; display: inline; margin-right: 8px; }
+.badge { display: inline-block; border-radius: 6px; padding: 1px 8px; font-size: 12px; white-space: nowrap; vertical-align: 2px; }
+.b-ok { background: var(--ok-bg); color: var(--ok-ink); }
+.b-warn { background: var(--low-bg); color: var(--low-ink); }
+.b-none { background: var(--none-bg); color: var(--none-ink); }
+.tags { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.sizes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.sz { border-radius: 8px; padding: 3px 9px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.sz b { font-weight: 600; margin-left: 4px; }
+.s-ok { background: var(--ok-bg); color: var(--ok-ink); }
+.s-low { background: var(--low-bg); color: var(--low-ink); }
+.s-out { background: var(--out-bg); color: var(--out-ink); }
+.empty { text-align: center; color: var(--muted); padding: 40px 0; }
+footer { color: var(--muted); font-size: 12px; margin-top: 24px; text-align: center; }
+/* 口令门 */
+#gate { max-width: 340px; margin: 18vh auto 0; padding: 0 20px; text-align: center; }
+#gate h1 { font-size: 22px; margin-bottom: 4px; }
+#gate p { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+#pc { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); font-size: 16px; text-align: center; outline: none; }
+#go { width: 100%; margin-top: 12px; padding: 12px; border: 0; border-radius: 10px; background: var(--accent); color: #fff; font-size: 15px; cursor: pointer; }
+#err { color: var(--out-ink); font-size: 13px; margin-top: 10px; min-height: 20px; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h1>它小灶 · 代发库存</h1>
+  <p>输入口令查看（区分大小写）</p>
+  <input id="pc" type="password" placeholder="口令" autocomplete="current-password">
+  <button id="go">进入</button>
+  <div id="err"></div>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <header>
+    <h1>它小灶 · 代发库存（定制款）</h1>
+    <div class="meta" id="upd"></div>
+  </header>
+  <div class="notice">库存为仓库盘点数据，每天更新两次；<b>当日已售未发货的订单尚未扣减</b>，紧俏码数下单前请先确认。标注「超卖可议」的款请勿按可现做上架，仅限已超卖时联系协商。</div>
+  <div class="controls">
+    <input id="q" type="search" placeholder="搜款名 / 颜色 / 标签（如：背心、春夏、绿）">
+    <div class="chips" id="chips"></div>
+  </div>
+  <div class="stats" id="stats"></div>
+  <div id="listBox"></div>
+  <footer>仅供合作代理查询 · 请勿转发链接与口令</footer>
+</div>
+
+<script>
+var DATA_IV = "__DATA_IV__", DATA_CT = "__DATA_CT__", KEYS = __KEYS__;
+var $ = function (id) { return document.getElementById(id); };
+function ub64(s) { var b = atob(s), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+
+async function tryUnlock(pass) {
+  var enc = new TextEncoder();
+  var base = await crypto.subtle.importKey('raw', enc.encode(pass.normalize('NFKC')), 'PBKDF2', false, ['deriveKey']);
+  for (var i = 0; i < KEYS.length; i++) {
+    var e = KEYS[i];
+    try {
+      var kek = await crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt: ub64(e.s), iterations: 210000, hash: 'SHA-256' },
+        base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+      var kraw = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64(e.i) }, kek, ub64(e.w));
+      var dk = await crypto.subtle.importKey('raw', kraw, 'AES-GCM', false, ['decrypt']);
+      var pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64(DATA_IV) }, dk, ub64(DATA_CT));
+      return JSON.parse(new TextDecoder().decode(pt));
+    } catch (err) { /* 下一把 */ }
+  }
+  return null;
+}
+
+var ALL = [], activeTags = new Set();
+
+function badge(mk, dy) {
+  if (mk === '可现做') return '<span class="badge b-ok">可现做' + (dy ? ' · 约' + dy + '天发出' : '') + '</span>';
+  if (mk === '超卖可议' || mk === '可协商') return '<span class="badge b-warn">超卖可议</span>';
+  if (mk === '不支持') return '<span class="badge b-none">不可现做</span>';
+  return '';
+}
+function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function render() {
+  var q = $('q').value.trim().toLowerCase();
+  var words = q ? q.split(/\s+/) : [];
+  var shown = 0, stockSku = 0, box = [];
+  for (var i = 0; i < ALL.length; i++) {
+    var st = ALL[i];
+    var hay = (st.n + ' ' + st.tg.join(' ')).toLowerCase();
+    var hit = words.every(function (w) { return hay.indexOf(w) !== -1; });
+    if (!hit) continue;
+    if (activeTags.size) {
+      var okTag = true;
+      activeTags.forEach(function (t) { if (st.tg.indexOf(t) === -1) okTag = false; });
+      if (!okTag) continue;
+    }
+    shown++;
+    var chips = st.sz.map(function (p) {
+      var cls = p[1] <= 0 ? 's-out' : (p[1] <= 3 ? 's-low' : 's-ok');
+      if (p[1] > 0) stockSku++;
+      return '<span class="sz ' + cls + '">' + esc(p[0]) + '<b>' + (p[1] <= 0 ? '无' : p[1]) + '</b></span>';
+    }).join('');
+    box.push('<div class="card"><h2>' + esc(st.n) + '</h2>' + badge(st.mk, st.dy) +
+      (st.tg.length ? '<div class="tags">' + esc(st.tg.join(' · ')) + '</div>' : '') +
+      '<div class="sizes">' + chips + '</div></div>');
+  }
+  $('stats').textContent = shown + ' 个款色 · 有货 SKU ' + stockSku + ' 个（数字为现货件数）';
+  $('listBox').innerHTML = box.length ? box.join('') : '<div class="empty">没搜到，换个词试试（比如只搜两个字）</div>';
+}
+
+function boot(data) {
+  ALL = data.styles;
+  $('upd').textContent = '库存更新于 ' + data.t + '（每天约 14:00 / 20:30 更新）';
+  var counts = {};
+  ALL.forEach(function (st) { st.tg.forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
+  var tags = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).slice(0, 14);
+  $('chips').innerHTML = tags.map(function (t) { return '<span class="chip" data-t="' + esc(t) + '">' + esc(t) + '</span>'; }).join('');
+  $('chips').addEventListener('click', function (ev) {
+    var t = ev.target.getAttribute('data-t');
+    if (!t) return;
+    if (activeTags.has(t)) { activeTags.delete(t); ev.target.classList.remove('on'); }
+    else { activeTags.add(t); ev.target.classList.add('on'); }
+    render();
+  });
+  $('q').addEventListener('input', render);
+  $('gate').hidden = true;
+  $('app').hidden = false;
+  render();
+}
+
+async function attempt(pass, silent) {
+  $('err').textContent = '';
+  $('go').textContent = '验证中…';
+  var data = await tryUnlock(pass);
+  $('go').textContent = '进入';
+  if (data) { try { localStorage.setItem('txz_pc', pass); } catch (e) {} boot(data); }
+  else if (!silent) $('err').textContent = '口令不对，再试试';
+}
+
+$('go').addEventListener('click', function () { attempt($('pc').value, false); });
+$('pc').addEventListener('keydown', function (e) { if (e.key === 'Enter') attempt($('pc').value, false); });
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('txz_pc'); } catch (e) {}
+  if (saved) attempt(saved, true);
+})();
+</script>
+</body>
+</html>

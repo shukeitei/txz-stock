@@ -2,6 +2,7 @@
 .passcodes.json
 data/*
 !data/item-images.json
+!data/style-images.json
 site/*
 !site/img
 node_modules/

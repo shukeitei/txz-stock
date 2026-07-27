@@ -1,6 +1,8 @@
 .env
 .passcodes.json
-data/
-site/
+data/*
+!data/item-images.json
+site/*
+!site/img
 node_modules/
 .DS_Store

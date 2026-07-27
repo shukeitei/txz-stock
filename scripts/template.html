@@ -37,7 +37,9 @@ header h1 { font-size: 20px; letter-spacing: .02em; }
 .chip { border: 1px solid var(--line); background: var(--card); color: var(--muted); border-radius: 999px; padding: 3px 11px; font-size: 12.5px; cursor: pointer; user-select: none; }
 .chip.on { border-color: var(--accent); color: var(--accent); background: transparent; font-weight: 600; }
 .stats { color: var(--muted); font-size: 12.5px; margin: 6px 0 10px; }
-.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start; }
+.card .thumb { width: 72px; height: 72px; border-radius: 9px; object-fit: cover; flex: none; margin-top: 2px; border: 1px solid var(--line); }
+.card .cbody { flex: 1; min-width: 0; }
 .card h2 { font-size: 15.5px; font-weight: 600; display: inline; margin-right: 8px; }
 .badge { display: inline-block; border-radius: 6px; padding: 1px 8px; font-size: 12px; white-space: nowrap; vertical-align: 2px; }
 .b-ok { background: var(--ok-bg); color: var(--ok-ink); }
@@ -141,9 +143,11 @@ function render() {
       if (p[1] > 0) stockSku++;
       return '<span class="sz ' + cls + '">' + esc(p[0]) + '<b>' + (p[1] <= 0 ? '无' : p[1]) + '</b></span>';
     }).join('');
-    box.push('<div class="card"><h2>' + esc(st.n) + '</h2>' + badge(st.mk, st.dy) +
+    box.push('<div class="card">' +
+      (st.im ? '<a href="' + esc(st.im) + '" target="_blank" rel="noopener"><img class="thumb" src="' + esc(st.im) + '" loading="lazy" alt=""></a>' : '') +
+      '<div class="cbody"><h2>' + esc(st.n) + '</h2>' + badge(st.mk, st.dy) +
       (st.tg.length ? '<div class="tags">' + esc(st.tg.join(' · ')) + '</div>' : '') +
-      '<div class="sizes">' + chips + '</div></div>');
+      '<div class="sizes">' + chips + '</div></div></div>');
   }
   $('stats').textContent = shown + ' 个款色 · 有货 SKU ' + stockSku + ' 个（数字为现货件数）';
   $('listBox').innerHTML = box.length ? box.join('') : '<div class="empty">没搜到，换个词试试（比如只搜两个字）</div>';

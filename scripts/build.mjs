@@ -27,6 +27,9 @@ const EXCLUDE_IDS = new Set(['857464619076', '847658314500', '760939427964', '72
 const HIDE_TAGS = new Set(['深圳', '工厂定制']);
 const rows = raw.rows.filter(r =>
   String(r['定制'] || '').includes('定制') && !EXCLUDE_IDS.has(String(r['商品ID'] || '').trim()));
+// 商品ID → 点击图（site/img/ 内，明文公开与代理报价页同口径）；没配图的款不显示缩略图
+const IMG_PATH = join(ROOT, 'data', 'item-images.json');
+const IMG_MAP = existsSync(IMG_PATH) ? JSON.parse(readFileSync(IMG_PATH, 'utf8')) : {};
 const styles = new Map();
 for (const r of rows) {
   const full = String(r['SKU全称'] || '').trim();
@@ -36,7 +39,7 @@ for (const r of rows) {
   const size = (slash > 0 ? full.slice(slash + 1) : '均码').replace(/码\s*$/, '').trim() || '均码';
   let st = styles.get(name);
   if (!st) {
-    st = { n: name, tg: new Set(), os: false, mk: '', dy: '', sz: [] };
+    st = { n: name, tg: new Set(), os: false, mk: '', dy: '', sz: [], im: IMG_MAP[String(r['商品ID'] || '').trim()] || '' };
     styles.set(name, st);
   }
   for (const t of String(r['产品类别'] || '').split(/[,，]/)) { const tt = t.trim(); if (tt && !HIDE_TAGS.has(tt)) st.tg.add(tt); }

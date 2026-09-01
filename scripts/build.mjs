@@ -25,8 +25,11 @@ if (!passcodes || !Object.keys(passcodes).length) {
 const EXCLUDE_IDS = new Set(['857464619076', '847658314500', '760939427964', '727888970927']);
 // 内部信息 tag，不给代理看
 const HIDE_TAGS = new Set(['深圳', '工厂定制']);
+// 按款名排除（与在售款共用商品ID、按 ID 排不掉的）：两对装是拼色组合，代理只按单色下单，看板不展示
+const EXCLUDE_NAME = /两对装/;
 const rows = raw.rows.filter(r =>
-  String(r['定制'] || '').includes('定制') && !EXCLUDE_IDS.has(String(r['商品ID'] || '').trim()));
+  String(r['定制'] || '').includes('定制') && !EXCLUDE_IDS.has(String(r['商品ID'] || '').trim())
+  && !EXCLUDE_NAME.test(String(r['SKU全称'] || '')));
 // 缩略图两级映射（site/img/ 内，明文公开与代理报价页同口径）：
 // 1) data/style-images.json 款色名 → 该花色专属 SKU 白底图（优先，多花色链接靠它区分）
 // 2) data/item-images.json  商品ID → 链接点击图（回落）

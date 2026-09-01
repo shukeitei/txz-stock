@@ -35,6 +35,9 @@ const IMG_PATH = join(ROOT, 'data', 'item-images.json');
 const IMG_MAP = existsSync(IMG_PATH) ? JSON.parse(readFileSync(IMG_PATH, 'utf8')) : {};
 const STYLE_IMG_PATH = join(ROOT, 'data', 'style-images.json');
 const STYLE_IMG = existsSync(STYLE_IMG_PATH) ? JSON.parse(readFileSync(STYLE_IMG_PATH, 'utf8')) : {};
+const MK_RANK = { '可现做': 0, '超卖可议': 1, '不支持': 2, '停产': 3 };
+const normMk = v => { const m = String(v || '').trim(); return m === '可协商' ? '超卖可议' : m; };
+const mkRank = m => (m in MK_RANK ? MK_RANK[m] : (m ? 4 : 9));
 const styles = new Map();
 for (const r of rows) {
   const full = String(r['SKU全称'] || '').trim();
@@ -49,9 +52,18 @@ for (const r of rows) {
   }
   for (const t of String(r['产品类别'] || '').split(/[,，]/)) { const tt = t.trim(); if (tt && !HIDE_TAGS.has(tt)) st.tg.add(tt); }
   if (String(r['在售'] || '').includes('在售')) st.os = true;
-  const mk = String(r['现做'] || '').trim(); if (mk && !st.mk) st.mk = mk;
-  const dy = String(r['现做发货时效'] || '').trim(); if (/^\d+$/.test(dy) && !st.dy) st.dy = dy;
-  st.sz.push([size, Number(r['实际库存']) || 0]);
+  // 款级「现做」取组内最优档（可现做 > 超卖可议 > 不支持 > 停产），别按第一行——
+  // 春夏护肘短款 L 码统一填「不支持」且排第一，按首行会把整款误标成不可现做
+  const mk = normMk(r['现做']);
+  if (mk && mkRank(mk) < mkRank(st.mk)) st.mk = mk;
+  const dy = String(r['现做发货时效'] || '').trim();
+  if (/^\d+$/.test(dy) && (!st.dy || (mk === '可现做' && !st.dyOk))) { st.dy = dy; if (mk === '可现做') st.dyOk = true; }
+  st.sz.push([size, Number(r['实际库存']) || 0, mk]);
+}
+// 尺码级例外：与款级档位不同的码，chip 上单独标（第三位保留差异值，相同则删掉省体积）
+for (const st of styles.values()) {
+  for (const p of st.sz) { if (!p[2] || p[2] === st.mk) p.length = 2; }
+  delete st.dyOk;
 }
 
 const SIZE_ORDER = ['XS','S','M','L','XL','2XL','3XL','4XL','5XL','6XL','7XL','8XL','9XL','10XL','11XL','12XL'];

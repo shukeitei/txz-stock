@@ -30,6 +30,26 @@ const EXCLUDE_NAME = /两对装/;
 const rows = raw.rows.filter(r =>
   String(r['定制'] || '').includes('定制') && !EXCLUDE_IDS.has(String(r['商品ID'] || '').trim())
   && !EXCLUDE_NAME.test(String(r['SKU全称'] || '')));
+// 未建正式 SKU 的临时库存只进入加密看板，不写入 AppSheet/千牛。
+const supplementPath = join(ROOT, 'data', 'stock-supplements.json');
+const supplements = JSON.parse(process.env.STOCK_SUPPLEMENTS ||
+  (existsSync(supplementPath) ? readFileSync(supplementPath, 'utf8') : '[]'));
+if (!Array.isArray(supplements)) throw new Error('临时库存必须为数组');
+const normSku = s => String(s || '').replace(/\s+/g, '').toLowerCase();
+const officialSkus = new Set(raw.rows.map(r => normSku(r['SKU全称'])));
+const addedIds = new Set();
+for (const r of supplements) {
+  if (!String(r['商品ID']).startsWith('TMP-') || !String(r.SKUID).startsWith('TMP-') ||
+      !r['SKU全称'] || !r['库存说明'] || !Number.isInteger(r['实际库存']) || r['实际库存'] < 0 ||
+      addedIds.has(r.SKUID)) throw new Error('临时库存编号、数量或说明无效');
+  addedIds.add(r.SKUID);
+  // 正式数据出现后优先正式库存，保留搜索别名，不叠加临时数量。
+  if (officialSkus.has(normSku(r['SKU全称']))) {
+    for (const official of rows) {
+      if (normSku(official['SKU全称']) === normSku(r['SKU全称'])) official['别名'] = r['别名'];
+    }
+  } else rows.push(r);
+}
 // 缩略图两级映射（site/img/ 内，明文公开与代理报价页同口径）：
 // 1) data/style-images.json 款色名 → 该花色专属 SKU 白底图（优先，多花色链接靠它区分）
 // 2) data/item-images.json  商品ID → 链接点击图（回落）
@@ -53,6 +73,8 @@ for (const r of rows) {
     st = { n: name, tg: new Set(), os: false, mk: '', dy: '', sz: [], im: STYLE_IMG[name] || IMG_MAP[String(r['商品ID'] || '').trim()] || '' };
     styles.set(name, st);
   }
+  if (r['别名']) st.alias = String(r['别名']);
+  if (r['库存说明']) st.note = String(r['库存说明']);
   for (const t of String(r['产品类别'] || '').split(/[,，]/)) { const tt = t.trim(); if (tt && !HIDE_TAGS.has(tt)) st.tg.add(tt); }
   if (String(r['在售'] || '').includes('在售')) st.os = true;
   // 款级「现做」取组内最优档（可现做 > 超卖可议 > 不支持 > 停产），别按第一行——

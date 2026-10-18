@@ -51,6 +51,15 @@ node scripts/build.mjs   # → site/index.html，可直接浏览器打开验收
 
 - `APPSHEET_APP_ID` / `APPSHEET_API_KEY` — AppSheet API 凭据
 - `AGENT_PASSCODES` — 口令 JSON
+- `STOCK_SUPPLEMENTS` — 未建正式 SKU 的临时库存（可选 JSON 数组），本地真身 `data/stock-supplements.json`（gitignored）。包含内部 SKU 全称、`TMP-` 前缀商品/SKU 编号、实际库存、别名和带核算日期的库存说明。只进加密页面，不回写 AppSheet 或千牛；不得把明文库存提交到公开仓。
+
+## 临时库存维护（2026-10-18）
+
+- 每条数量必须来自用户指定的生产/盘点依据，扣除对应已发生的出库；原图和核算凭据保存在本机 `data/`，不进公开仓。
+- 代理款名通过 `别名` 显示并参与搜索；临时编号只用于本机对照，不能作为平台正式 ID 使用。
+- 临时数据不会因每天拉取 AppSheet 而消失，也不会自动变成已盘点数据。后续有出库/退回/实盘时更新本地数量和核算日期，再同步 Secret 并触发发布。
+- 正式表出现同一 SKU 全称（忽略空格/大小写）后，使用正式库存且不叠加临时数量，沿用别名；正式上架若改名，必须人工迁移对应关系。
+- 修改后执行 `gh secret set STOCK_SUPPLEMENTS < data/stock-supplements.json`，再执行 `gh workflow run publish`。Secret 内不放成本、订单明细或客户信息。
 
 ## 相关
 

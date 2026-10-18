@@ -80,7 +80,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 24px; text-align: cen
     <h1>它小灶 · 代发库存（定制款）</h1>
     <div class="meta" id="upd"></div>
   </header>
-  <div class="notice">库存为仓库盘点数据，每天更新两次；<b>当日已售未发货的订单尚未扣减</b>，紧俏码数下单前请先确认。标注「超卖可议」的款请勿按可现做上架，仅限已超卖时联系协商。</div>
+  <div class="notice">常规库存每天更新两次；标注「临时库存」的款以卡片注明的核算日期为准，尚未实物盘点。<b>当日已售未发货的订单可能尚未扣减</b>，紧俏码数下单前请先确认。标注「超卖可议」的款请勿按可现做上架，仅限已超卖时联系协商。</div>
   <div class="controls">
     <input id="q" type="search" placeholder="搜款名 / 颜色 / 标签（如：背心、春夏、绿）">
     <div class="chips" id="chips"></div>
@@ -130,7 +130,7 @@ function render() {
   var shown = 0, stockSku = 0, box = [];
   for (var i = 0; i < ALL.length; i++) {
     var st = ALL[i];
-    var hay = (st.n + ' ' + st.tg.join(' ')).toLowerCase();
+    var hay = (st.n + ' ' + (st.alias || '') + ' ' + st.tg.join(' ')).toLowerCase();
     var hit = words.every(function (w) { return hay.indexOf(w) !== -1; });
     if (!hit) continue;
     if (activeTags.size) {
@@ -148,6 +148,8 @@ function render() {
     box.push('<div class="card">' +
       (st.im ? '<a href="' + esc(st.im) + '" target="_blank" rel="noopener"><img class="thumb" src="' + esc(st.im) + '" loading="lazy" alt=""></a>' : '') +
       '<div class="cbody"><h2>' + esc(st.n) + '</h2>' + badge(st.mk, st.dy) +
+      (st.alias ? '<div class="tags">别名：' + esc(st.alias) + '</div>' : '') +
+      (st.note ? '<div class="tags">' + esc(st.note) + '</div>' : '') +
       (st.tg.length ? '<div class="tags">' + esc(st.tg.join(' · ')) + '</div>' : '') +
       '<div class="sizes">' + chips + '</div></div></div>');
   }

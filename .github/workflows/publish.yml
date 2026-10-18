@@ -21,6 +21,7 @@ jobs:
           APPSHEET_APP_ID: ${{ secrets.APPSHEET_APP_ID }}
           APPSHEET_API_KEY: ${{ secrets.APPSHEET_API_KEY }}
           AGENT_PASSCODES: ${{ secrets.AGENT_PASSCODES }}
+          STOCK_SUPPLEMENTS: ${{ secrets.STOCK_SUPPLEMENTS }}
         run: |
           node scripts/pull.mjs
           node scripts/build.mjs

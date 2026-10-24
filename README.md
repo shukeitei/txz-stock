@@ -69,6 +69,7 @@ node scripts/build.mjs   # → site/index.html，可直接浏览器打开验收
   - 花色：她在拿的 2代护肘（`COLORS` 白名单，含主推三色）；兔个槽（专供按段做）、兔个泡、停产行不放。
   - 护垫：有「护垫加厚款」规格的花色只取加厚款（10-15 起她的货全用新护垫）；没有加厚款规格的（春节锦鲤/福鹿、秋冬暴走萝莉）取普通规格。
   - 尺码：只给 XL/2XL/3XL，页面按她的写法显示 XL/XXL/XXXL；小 XL/小 2XL/L 不给。
+  - 暂隐藏：`HIDE`（现为年画鸭，10-24 起；等决定 PO30261003/04 的年画鸭抵不抵现货后恢复）。
   - 数量：每码扣 `RESERVE`（现为 2）给零售留底，≤0 显示无货。不带价格、不带现做/交期。
 - 图：`site/img/na/`，来自 `代理交涉/给代理_v1/` 已给过她的白底图（480px）；暴走萝莉无图。
 - 改口令：改 `.passcodes-na.json` → `gh secret set NA_PASSCODES < .passcodes-na.json` → `gh workflow run publish`。

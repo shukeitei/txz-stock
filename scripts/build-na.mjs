@@ -28,6 +28,8 @@ const COLORS = {
   潮豹啦: '潮豹', 年画鸭: '年画鸭', 冷豹力: '冷豹力', 摸个鱼: '摸个鱼', 抓大鹅: '抓大鹅',
   兔个乐: '兔个乐', 雪人精: '雪人精', 暴走萝莉: '暴走萝莉',
 };
+// 暂不展示的花色：年画鸭两批 66 件在等面料，抵不抵现货栩栩未定（10-24），定了再从这里删
+const HIDE = new Set(['年画鸭']);
 // 10-15 起她的货全用新护垫：某花色有「护垫加厚款」规格就只取加厚款；没有加厚款规格的（春节、秋冬双层）取普通规格
 // 尺码对她用 XL/XXL/XXXL（她下单表的写法）；小 XL / 小 2XL / L 不给
 const SIZE_OUT = { XL: 'XL', '2XL': 'XXL', '3XL': 'XXXL' };
@@ -42,7 +44,7 @@ const IMG = {
 const groups = new Map();
 for (const r of raw.rows) {
   const m = RE.exec(String(r['SKU全称'] || '').trim());
-  if (!m || !(m[1] in COLORS)) continue;
+  if (!m || !(m[1] in COLORS) || HIDE.has(m[1])) continue;
   if (String(r['现做'] || '').trim() === '停产') continue;
   const key = m[1] + '|' + m[2];
   let g = groups.get(key);

@@ -61,6 +61,18 @@ node scripts/build.mjs   # → site/index.html，可直接浏览器打开验收
 - 正式表出现同一 SKU 全称（忽略空格/大小写）后，使用正式库存且不叠加临时数量，沿用别名；正式上架若改名，必须人工迁移对应关系。
 - 修改后执行 `gh secret set STOCK_SUPPLEMENTS < data/stock-supplements.json`，再执行 `gh workflow run publish`。Secret 内不放成本、订单明细或客户信息。
 
+## 北美代理专属页（珊珊 · 2026-10-24）
+
+- 网址：https://shukeitei.github.io/txz-stock/na/ ，口令跟主看板**不通用**；本地真身 `.passcodes-na.json`（gitignored，含珊珊+栩栩），云端 Secret `NA_PASSCODES`。
+- 构建：`scripts/build-na.mjs` + `scripts/template-na.html`，跟主看板同一次 Actions 一起跑、共用 raw.json。
+- 口径（栩栩 10-24 定）：
+  - 花色：她在拿的 2代护肘（`COLORS` 白名单，含主推三色）；兔个槽（专供按段做）、兔个泡、停产行不放。
+  - 护垫：有「护垫加厚款」规格的花色只取加厚款（10-15 起她的货全用新护垫）；没有加厚款规格的（春节锦鲤/福鹿、秋冬暴走萝莉）取普通规格。
+  - 尺码：只给 XL/2XL/3XL，页面按她的写法显示 XL/XXL/XXXL；小 XL/小 2XL/L 不给。
+  - 数量：每码扣 `RESERVE`（现为 2）给零售留底，≤0 显示无货。不带价格、不带现做/交期。
+- 图：`site/img/na/`，来自 `代理交涉/给代理_v1/` 已给过她的白底图（480px）；暴走萝莉无图。
+- 改口令：改 `.passcodes-na.json` → `gh secret set NA_PASSCODES < .passcodes-na.json` → `gh workflow run publish`。
+
 ## 相关
 
 - 姊妹项目：`~/Developer/招柴桔账单`（同款加密静态页架构，对账单）

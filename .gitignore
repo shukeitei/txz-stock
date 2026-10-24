@@ -8,3 +8,4 @@ site/*
 node_modules/
 .DS_Store
 黎玥任务卡*
+.passcodes-na.json

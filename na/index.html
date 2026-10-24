@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>护肘袖套现货</title>
+<style>
+:root {
+  --bg: #f6f4f0; --card: #ffffff; --ink: #2d2a26; --muted: #8a8378;
+  --line: #e6e1d8; --accent: #b5541c;
+  --ok-bg: #e5efdf; --ok-ink: #3d6b2e;
+  --low-bg: #f7ecd4; --low-ink: #8a6414;
+  --out-bg: #eceae5; --out-ink: #a39c90;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1b18; --card: #26231f; --ink: #e8e4dd; --muted: #97907f;
+    --line: #38342d; --accent: #e0824a;
+    --ok-bg: #2c3b26; --ok-ink: #9fc98a;
+    --low-bg: #3d3420; --low-ink: #d9b45e;
+    --out-bg: #302d28; --out-ink: #7d776c;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 16px 16px 60px; }
+header h1 { font-size: 20px; letter-spacing: .02em; }
+.meta { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+.notice { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 13px; color: var(--muted); margin: 12px 0; }
+.stats { color: var(--muted); font-size: 12.5px; margin: 6px 0 10px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; display: flex; gap: 12px; align-items: center; }
+.card.zero { opacity: .62; }
+.card .thumb { width: 64px; height: 64px; border-radius: 9px; object-fit: cover; flex: none; border: 1px solid var(--line); background: #fff; }
+.card .cbody { flex: 1; min-width: 0; }
+.card h2 { font-size: 15.5px; font-weight: 600; }
+.sizes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.sz { border-radius: 8px; padding: 3px 10px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.sz b { font-weight: 600; margin-left: 5px; }
+.s-ok { background: var(--ok-bg); color: var(--ok-ink); }
+.s-low { background: var(--low-bg); color: var(--low-ink); }
+.s-out { background: var(--out-bg); color: var(--out-ink); }
+footer { color: var(--muted); font-size: 12px; margin-top: 24px; text-align: center; }
+#gate { max-width: 340px; margin: 18vh auto 0; padding: 0 20px; text-align: center; }
+#gate h1 { font-size: 22px; margin-bottom: 4px; }
+#gate p { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+#pc { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); font-size: 16px; text-align: center; outline: none; }
+#go { width: 100%; margin-top: 12px; padding: 12px; border: 0; border-radius: 10px; background: var(--accent); color: #fff; font-size: 15px; cursor: pointer; }
+#err { color: #a04b3a; font-size: 13px; margin-top: 10px; min-height: 20px; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h1>护肘袖套现货</h1>
+  <p>输入口令查看（区分大小写）</p>
+  <input id="pc" type="password" placeholder="口令" autocomplete="current-password">
+  <button id="go">进入</button>
+  <div id="err"></div>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <header>
+    <h1>护肘袖套现货</h1>
+    <div class="meta" id="upd"></div>
+  </header>
+  <div class="notice"><b>本页不是实时库存</b>，每天北京时间约 14:00、20:30 各刷新一次，两次刷新之间其他渠道售出的件数不会马上扣减。数字为可随批发出的现货参考，下单后以我们回复确认的数量为准。</div>
+  <div class="stats" id="stats"></div>
+  <div id="listBox"></div>
+  <footer>仅供查询 · 请勿转发链接与口令</footer>
+</div>
+
+<script>
+var DATA_IV = "pbSmi7o5c+j7Yika", DATA_CT = "gu2aqbhB9P6lknjtdchgMi019qiGyxiDV1PPA6r0KXNRdl7YQzLAm8AS2REpkzC4t1r3kVfU2YTAXLCnWjHzYVJ3E6St5IGMyzQbtGM/mjQYIV2Hw0wZMBOVyJu7cHYifZqC2XY0Pnz5zNGbsad4SZAJMDz56j2aHcdENCsr3hiZaE30fzwrytvOHU36Qyt7y/w0OUgSbANkIFYek7emiupKI6+p3M5HcuHVMd0ddO7aZp2mVcgjyAKB+g5OzCLB1zOUaCI/po8Rcq9sdS8rfaXfLsU5QKlKg011/3RYdQISHfFLYZxTR9FrXBmxobAGzJkuHbrcPKbXVkLPpSTGwEzItoLyZOynkVhcMCfnCYipcSYJe+gczsGHbs6zhbiTH3na7F6Gvn5k2gCbfy3xB8SMZJw4EtZWWIezbsqCta/O4Pl2PB9dqbvXjjTZpyOcfgy5lOjgu1ctyc4T4gbyGyXk5lAMvOnpqag2b/RPmISByl7o9WSYJ1FOaDyN3EoGi1YxOCJSU3cjJfYoNE4VoQE3iphnUsetsFlggC8dHIVM8Rwni2+LNQB6/y10c250p0TpeJiBERfI6fAnpJg6LcEnmGoSeGEU6KwOFjFImkLvoLHGLYi9GyTn9DugEqmFu7ZNmqi116Tbf6zF6Zgf3su5mJpn6QzaEp2ZM6AL0OJRcx3PVtPC9bR1P26Er0Sd0InhM28rGFFylnRkZOVtzW/V+8PGyURpsUPOA/SDFABWN56SJ0AO1NFEPOw3vMl2K+1qw9Y4RsOP94H+9sMFdLwBfSDT1LoSsMiOSYF6n7WT7HzYpm7YfRyh+hFM+nf7Sgz5M1s7XbColLr8uugaM54K1LgYspGWCL9m4TvRig/Ghi8rGxuq2hVepjwSPi1euyplxNSaquMuvAL1luoOh1MbirCgbGYKZADPfspPxeZs5bmOmtwg19s8vdbWUfTHzJ7J9OzLL3udbdkP95atXUhA27Mvd7q1GZotqwinEZZxumfVosGxpKuBlH/mNJFWxawfTvzMhaGQ08cxeHH7z2UMJ+Z1FGOXAbZtVCyXHB0BhH1RuyvWkw60HY+U0Z/1pdaP0DG+NqrrJiLnZvvIZkUzQOpOYFgq6QRVhVUA2Q9IM3uSi/fnng2+VqLorwKGzQIk1mOmMi5rtvPmpI069YpcQ4f1IjlKZRYO50FzivUqjMi0JIMxwsg3X49lbjBtaT1TIpUnZ1WgLH/M+BYUlmcQfQqKHtMhOc2cD/sTa3XCyLOoPeBL3WZvr4tWXerfUNurhTKGDnm65iMwkygp4LNQDOpXIBEKbOuzbt+rx9ccm0jwuKScUo/D9yIu6jTvvCsvlGRt98icWne2Vm3bn+O4SD9VTr8VOfOvf9t787hs4Vw+gKAM7Dr/V9FSTv8VUaL3Vg3IKgM9RhP+PcnyAz4/4pJEMkRimuF8M0i9rzWcxBIA6U+scvY9LhLg1N+SwY5n8w1jDI6kyzlrJ29ZZ/Z1SVUvIzOp5gS9VL851mAu9E8r8rfUxQcGGDgJXHC4xTcgExhDiCSW7coEXCF6fOt3+p0OXf9r60gLMcroosP2smDA4NW/4UOQ0a+ZRKZeM+w9rgb9eBbMlrcbAP9RHRSggfd0LlzBfvSAYSxBXOE68A+tBlSoj17658qhgZ9glXuA50WdAktBsJlC+v25Wp2cz1/VmL+q3v1umaR90K10EE8=", KEYS = [{"s":"kimmwpWwyG3jPmxEJrTuTA==","i":"MYcTZXWJqGJg6uPJ","w":"+wr06f7BZQ7iUOBbztY0/fuUszCA1dSRd4pt51TmJUkMdAkaHF1BKe+LvVYonkPG"},{"s":"AkeVgZ5nMz3HezUsgTuP0w==","i":"pHUK4XC2A1dm99KR","w":"4BO7HTGb1lqk1kKZR54pn0LYKoWTJ0cw/zR6OLwb+tKq6doQGLNiQkb7mz1xMvzU"}];
+var $ = function (id) { return document.getElementById(id); };
+function ub64(s) { var b = atob(s), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+async function tryUnlock(pass) {
+  var enc = new TextEncoder();
+  var base = await crypto.subtle.importKey('raw', enc.encode(pass.normalize('NFKC')), 'PBKDF2', false, ['deriveKey']);
+  for (var i = 0; i < KEYS.length; i++) {
+    var e = KEYS[i];
+    try {
+      var kek = await crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt: ub64(e.s), iterations: 210000, hash: 'SHA-256' },
+        base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+      var kraw = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64(e.i) }, kek, ub64(e.w));
+      var dk = await crypto.subtle.importKey('raw', kraw, 'AES-GCM', false, ['decrypt']);
+      var pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64(DATA_IV) }, dk, ub64(DATA_CT));
+      return JSON.parse(new TextDecoder().decode(pt));
+    } catch (err) { /* 下一把 */ }
+  }
+  return null;
+}
+
+function boot(data) {
+  $('upd').textContent = '更新于 ' + data.t + '（北京时间，每天约 14:00 / 20:30 更新）';
+  var withStock = 0, box = [];
+  data.styles.forEach(function (st) {
+    var sum = 0;
+    var chips = st.sz.map(function (p) {
+      sum += p[1];
+      var cls = p[1] <= 0 ? 's-out' : (p[1] <= 3 ? 's-low' : 's-ok');
+      return '<span class="sz ' + cls + '">' + esc(p[0]) + '<b>' + (p[1] <= 0 ? '无' : p[1]) + '</b></span>';
+    }).join('');
+    if (sum > 0) withStock++;
+    box.push('<div class="card' + (sum > 0 ? '' : ' zero') + '">' +
+      (st.im ? '<img class="thumb" src="' + esc(st.im) + '" loading="lazy" alt="">' : '') +
+      '<div class="cbody"><h2>' + esc(st.n) + '</h2><div class="sizes">' + chips + '</div></div></div>');
+  });
+  $('stats').textContent = '共 ' + data.styles.length + ' 个花色，其中 ' + withStock + ' 个有现货';
+  $('listBox').innerHTML = box.join('');
+  $('gate').hidden = true;
+  $('app').hidden = false;
+}
+
+async function attempt(pass, silent) {
+  $('err').textContent = '';
+  $('go').textContent = '验证中…';
+  var data = await tryUnlock(pass);
+  $('go').textContent = '进入';
+  if (data) { try { localStorage.setItem('txz_na_pc', pass); } catch (e) {} boot(data); }
+  else if (!silent) $('err').textContent = '口令不对，再试试';
+}
+
+$('go').addEventListener('click', function () { attempt($('pc').value, false); });
+$('pc').addEventListener('keydown', function (e) { if (e.key === 'Enter') attempt($('pc').value, false); });
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('txz_na_pc'); } catch (e) {}
+  if (saved) attempt(saved, true);
+})();
+</script>
+</body>
+</html>

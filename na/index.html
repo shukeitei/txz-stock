@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>护肘袖套现货</title>
+<style>
+:root {
+  --bg: #f6f4f0; --card: #ffffff; --ink: #2d2a26; --muted: #8a8378;
+  --line: #e6e1d8; --accent: #b5541c;
+  --ok-bg: #e5efdf; --ok-ink: #3d6b2e;
+  --low-bg: #f7ecd4; --low-ink: #8a6414;
+  --out-bg: #eceae5; --out-ink: #a39c90;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1b18; --card: #26231f; --ink: #e8e4dd; --muted: #97907f;
+    --line: #38342d; --accent: #e0824a;
+    --ok-bg: #2c3b26; --ok-ink: #9fc98a;
+    --low-bg: #3d3420; --low-ink: #d9b45e;
+    --out-bg: #302d28; --out-ink: #7d776c;
+  }
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+.wrap { max-width: 720px; margin: 0 auto; padding: 16px 16px 60px; }
+header h1 { font-size: 20px; letter-spacing: .02em; }
+.meta { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+.notice { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 13px; color: var(--muted); margin: 12px 0; }
+.stats { color: var(--muted); font-size: 12.5px; margin: 6px 0 10px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; display: flex; gap: 12px; align-items: center; }
+.card.zero { opacity: .62; }
+.card .thumb { width: 64px; height: 64px; border-radius: 9px; object-fit: cover; flex: none; border: 1px solid var(--line); background: #fff; }
+.card .cbody { flex: 1; min-width: 0; }
+.card h2 { font-size: 15.5px; font-weight: 600; }
+.sizes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.sz { border-radius: 8px; padding: 3px 10px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.sz b { font-weight: 600; margin-left: 5px; }
+.s-ok { background: var(--ok-bg); color: var(--ok-ink); }
+.s-low { background: var(--low-bg); color: var(--low-ink); }
+.s-out { background: var(--out-bg); color: var(--out-ink); }
+footer { color: var(--muted); font-size: 12px; margin-top: 24px; text-align: center; }
+#gate { max-width: 340px; margin: 18vh auto 0; padding: 0 20px; text-align: center; }
+#gate h1 { font-size: 22px; margin-bottom: 4px; }
+#gate p { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+#pc { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); font-size: 16px; text-align: center; outline: none; }
+#go { width: 100%; margin-top: 12px; padding: 12px; border: 0; border-radius: 10px; background: var(--accent); color: #fff; font-size: 15px; cursor: pointer; }
+#err { color: #a04b3a; font-size: 13px; margin-top: 10px; min-height: 20px; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <h1>护肘袖套现货</h1>
+  <p>输入口令查看（区分大小写）</p>
+  <input id="pc" type="password" placeholder="口令" autocomplete="current-password">
+  <button id="go">进入</button>
+  <div id="err"></div>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <header>
+    <h1>护肘袖套现货</h1>
+    <div class="meta" id="upd"></div>
+  </header>
+  <div class="notice"><b>本页不是实时库存</b>，每天北京时间约 14:00、20:30 各刷新一次，两次刷新之间其他渠道售出的件数不会马上扣减。数字为可随批发出的现货参考，下单后以我们回复确认的数量为准。</div>
+  <div class="stats" id="stats"></div>
+  <div id="listBox"></div>
+  <footer>仅供查询 · 请勿转发链接与口令</footer>
+</div>
+
+<script>
+var DATA_IV = "dSgruZLpJK3yoLuj", DATA_CT = "e+OMX7X/ZTmn7CsG8GHV05+8YW4IYFU6l8+pnryCGn1uCgZJm5p/eiZQbTdLqqRuL44SHTIP4Io8XGXiQbnbVRis6xesbvjYyoFBgYwv73hH9kdiFhhdGztSWuCSse+ApshdCb8EDzG/VQ5Jb9IcPfJTBBpGSYDAyPZJpNdi8XTjG4PbrvRbbcW1z3Qm+1PZsbHVP+dIpTcsc6H9Z7bT08qdrpLs27IBdr8m1RpaTsLrTUJHAEOFe85NUt0/X3/ywlfSgSO2D6c79csDt4ZR+X53Dtgf4K3/6XtN7+zh5FeEdcUe02ezHmF5qycol6Bv0lpoA5DpdPU+nGqPhhFjwrp+BYywsqa1/596s8UHSJ8t6zbh6qAmpPWLZ1u/lZBFDNGup6kHycbb9fquIXGy1tTY+Nq+EapBRcdet45CbryBL/iFn5baYDVyE/FLwtZnyXEV0HQ+AstDZylLDlQnMF0Cxm9cwp5BTcsTq8mKj8GUTyY5QxcTvKyW09AGvCFLUvv7TdlABDJgM+/OuzdT8/6vT6DAe8KuF5h8wEW3VsonlBrumdFJFXLg1lxFfzCPfIlhK3Pa+fGK6DEb65SV3oxC4frINsboEpsYTQMP/NBLb5IYGO+3X3GnV+WcUiXrqD5lwDd8TQJFmDuivLk8AqUwHGVXiTP1Anft6bRLfKh6Gy1Y1lkzz8j4p9DtrQWR+YNU1vh4xCo42JdMS36mg/5QmYCkbdzE3DIDlVJtPjiWYApMMGeQiGY7w+TN5S4zWxgipvCueftXq0w8Qc5MrUMea+ug1CLO7fw1qU1pYjg7/pJL7KW6QH4m/BUC5lqCiwfBnfIH+0NCTT1bsdwchxb+fV/0HIwAiEmvPl5v+2scF5zORrYtbW0WhBd6C8AKkKom+ExBZ970fNikjwushHEQ1yqh8zCyqiEhnH4b12D6ZLzFf5FoRANiKfKV7r6BQCET7IGHsJMp0+R9kv5PVMrrHAujONjzo25hjZ4kffCgu9IGnrSJMR9PmYZ6+bj6kucl2fXzLVz9AY/MRbHNwPsQhsI2z2duEMlw296tOrCoQ/G7nKnMqxcIRcdWR0GDKN48Fx+J5p8gqvczkgtCnnHHFn2gahu6LOL8JWy7mfrNJt+3enoCJbojUzcn06H6udCP7+XLJGFnkK31f+wWxq1SoetMs1FsGLrpVShX6IC0SQXXGOJIUnBh+2LPPnA9wkWfiqqfPVY7+ssPHjLgKBzNXfsPTdhPjhNCTv6Dck0qVQDc7eHPlYKqh9nIyXwfD2e6RryUKnttW+z1paMh31zNc8GYJ+AyULtOma4=", KEYS = [{"s":"+S8jsk4clKxlsUD/kkJ4bw==","i":"zlTXzIeETMFsrYKm","w":"rVHutHHZvFWLww9ChE9C69qm3fzg36BtAo6DvfvTG/i2SNmbxRRijM/bYMYYGq6L"},{"s":"e4NOSf1HCnS/HckMocISrw==","i":"ERiYpZbLa03DVdmM","w":"RroKI0RPi5EwveSxfqfCQQLePfYo79ySgb44Y6DnYBcZ0gjTWC0dA1WtSwKdcCvb"}];
+var $ = function (id) { return document.getElementById(id); };
+function ub64(s) { var b = atob(s), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+async function tryUnlock(pass) {
+  var enc = new TextEncoder();
+  var base = await crypto.subtle.importKey('raw', enc.encode(pass.normalize('NFKC')), 'PBKDF2', false, ['deriveKey']);
+  for (var i = 0; i < KEYS.length; i++) {
+    var e = KEYS[i];
+    try {
+      var kek = await crypto.subtle.deriveKey(
+        { name: 'PBKDF2', salt: ub64(e.s), iterations: 210000, hash: 'SHA-256' },
+        base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+      var kraw = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64(e.i) }, kek, ub64(e.w));
+      var dk = await crypto.subtle.importKey('raw', kraw, 'AES-GCM', false, ['decrypt']);
+      var pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: ub64(DATA_IV) }, dk, ub64(DATA_CT));
+      return JSON.parse(new TextDecoder().decode(pt));
+    } catch (err) { /* 下一把 */ }
+  }
+  return null;
+}
+
+function boot(data) {
+  $('upd').textContent = '更新于 ' + data.t + '（北京时间，每天约 14:00 / 20:30 更新）';
+  var withStock = 0, box = [];
+  data.styles.forEach(function (st) {
+    var sum = 0;
+    var chips = st.sz.map(function (p) {
+      sum += p[1];
+      var cls = p[1] <= 0 ? 's-out' : (p[1] <= 3 ? 's-low' : 's-ok');
+      return '<span class="sz ' + cls + '">' + esc(p[0]) + '<b>' + (p[1] <= 0 ? '无' : p[1]) + '</b></span>';
+    }).join('');
+    if (sum > 0) withStock++;
+    box.push('<div class="card' + (sum > 0 ? '' : ' zero') + '">' +
+      (st.im ? '<img class="thumb" src="' + esc(st.im) + '" loading="lazy" alt="">' : '') +
+      '<div class="cbody"><h2>' + esc(st.n) + '</h2><div class="sizes">' + chips + '</div></div></div>');
+  });
+  $('stats').textContent = '共 ' + data.styles.length + ' 个花色，其中 ' + withStock + ' 个有现货';
+  $('listBox').innerHTML = box.join('');
+  $('gate').hidden = true;
+  $('app').hidden = false;
+}
+
+async function attempt(pass, silent) {
+  $('err').textContent = '';
+  $('go').textContent = '验证中…';
+  var data = await tryUnlock(pass);
+  $('go').textContent = '进入';
+  if (data) { try { localStorage.setItem('txz_na_pc', pass); } catch (e) {} boot(data); }
+  else if (!silent) $('err').textContent = '口令不对，再试试';
+}
+
+$('go').addEventListener('click', function () { attempt($('pc').value, false); });
+$('pc').addEventListener('keydown', function (e) { if (e.key === 'Enter') attempt($('pc').value, false); });
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('txz_na_pc'); } catch (e) {}
+  if (saved) attempt(saved, true);
+})();
+</script>
+</body>
+</html>
